@@ -64,11 +64,13 @@
                       <td>{{$m->no_hp}}</td>
                       <td>{{$m->alamat}}</td>
                       <td> <img src="dist/img/{{$m->foto}}?>" width="100px" height="100px" /> </td>
-                      <td><a href="{{ url("mahasiswa/$m->nim/edit") }}" class="btn btn-primary" >Edit</a>
-                          <form action="{{ url("mahasiswa/$m->nim") }}" method="post" class="d-inline">
-                            @method('delete')
-                            @csrf
-                        <button class="btn btn-danger" onclick="return confirm('Yakin mau delete?')">Hapus</button>
+                      <td><a href="{{ url ("mahasiswa/$m->nim/edit")}}" class="btn btn-primary" >Edit</a>
+                        <form action="{{ url("mahasiswa/$m->nim")}}" method="post" class="d-inline">
+                          @method('delete')
+                          @csrf
+                        <button href="" class="btn btn-danger" onclick="return confirm('Yakin mau delete semua kenangan yang ada?')" >Hapus</button>
+                      </form>
+                    </td>
                     </tr>
 @endforeach
                   </tbody>

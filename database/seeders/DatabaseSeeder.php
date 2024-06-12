@@ -25,24 +25,25 @@ class DatabaseSeeder extends Seeder
 
         prodi::factory(10)->create();
 
-        Mahasiswa::create([
-            'nim' => 'E020322090',
-            'nama' => 'Assyifa',
-            'no_hp' => '082159545158',
-            'alamat' => 'jalan HKSN',
-            'foto' => 'E020322090.jpeg',
-            'password' => '123',
-            'prodi_id' => 1,  
-        ]);
 
         Mahasiswa::create([
-            'nim' => 'E020322099',
-            'nama' => 'Nornadzilla',
-            'no_hp' => '08333445567',
-            'alamat' => 'jalan HKSN',
-            'foto' => 'E020322090.jpeg',
+            'nim' => 'E020322086',
+            'nama' => 'Oppenheimer',
+            'no_hp' => '098764',
+            'alamat' => 'asbdias',
+            'foto' => 'oppen.jpg',
             'password' => '123',
-            'prodi_id' => 2,  
+            'prodi_id' => 1,
+        ]);
+        
+        Mahasiswa::create([
+            'nim' => '1prhbsjd',
+            'nama' => 'ajsndjk',
+            'no_hp' => '98128',
+            'alamat' => 'adbhadsd',
+            'foto' => 'girl.jpg',
+            'password' => '123',
+            'prodi_id' => 2,
         ]);
 
         Mahasiswa::factory(100)->create();

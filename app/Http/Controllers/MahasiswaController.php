@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Mahasiswa;
+
 use App\Models\Prodi;
+use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -14,7 +15,7 @@ class MahasiswaController extends Controller
     public function index()
     {
         //
-        $data =['nama'=> 'syfa', 'foto' => 'E020322090.jpeg'];
+        $data = ['nama' => "syfa", 'foto' => 'E020322090.jpeg'];
         $mahasiswa = Mahasiswa::get();
         return view('mahasiswa.index', compact(['data', 'mahasiswa']));
     }
@@ -25,9 +26,9 @@ class MahasiswaController extends Controller
     public function create()
     {
         //
-        $data = ['nama' => 'syfa', 'foto' => 'E020322090.jpeg'];
+        $data = ['nama' => "syfa", 'foto' => 'E020322090.jpeg'];
         $prodi = Prodi::all();
-        return view('mahasiswa.create', compact (['data', 'pridi']));
+        return view('mahasiswa.create', compact(['data', 'prodi']));
     }
 
     /**
@@ -38,25 +39,22 @@ class MahasiswaController extends Controller
         //
         $validateData = $request->validate(
             [
-                'nim'=>'required|unique:mahasiswa|max:255',
-                'nama'=> '',
-                'prodi_id'=> '',
-                'no_hp'=> '',
-                'alamat'=> '',
-
+                'nim' => 'required|unique:mahasiswa|max:255',
+                'nama' => '',
+                'prodi_id' => '',
+                'no_hp' => '',
+                'alamat' => '',
             ],
             [
-                'nim.required' => 'NIM harus diisi',
-                'nim.unique'=> 'NIM sudah ada',
-            'nim.max'=> 'NIM maksimal 255 karakter',
+                'nim.required' => 'Nim Harus diisi',
+                'nim.unique' => 'Nim sudah ada',
+                'nim.max' => 'Nim maksimal 255 karakter',
             ]
             );
-
-        $validateData['foto']= $validateData['nim'] . '.jpg';
-        $validateData['password']= Hash::make($validateData['nim']);
-        Mahasiswa::create($validateData);
-        return redirect('/mahasiswa');
-
+            $validateData['foto'] = $validateData['nim'] . '.jpg';
+            $validateData['password'] = Hash::make($validateData['nim']);
+            Mahasiswa::create($validateData);
+            return redirect ('/mahasiswa');
     }
 
     /**
@@ -71,13 +69,12 @@ class MahasiswaController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
-    {
-        //
-        $data = ['nama'=> 'syfa', 'foto' => 'E020322090.jpeg'];
-        $mahasiswa = Mahasiswa::find($id);
-        $prodi = Prodi::all();
-        return view('mahasiswa.edit', compact(['data', 'mahasiswa', 'prodi']));
-    }
+{
+    $data = ['nama' => "syfa", 'foto' => 'E020322090.jpeg'];
+    $mahasiswa = Mahasiswa::where('nim', $id)->first(); // Adjust if the primary key is 'nim'
+    $prodi = Prodi::all();
+    return view('mahasiswa.edit', compact(['data', 'mahasiswa', 'prodi']));
+}
 
     /**
      * Update the specified resource in storage.
@@ -85,26 +82,24 @@ class MahasiswaController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $validateData =$request->validate(
+        $validateData = $request->validate(
             [
-                
-                'nim'=>'required|max:255',
-                'nama'=> '',
-                'prodi_id'=> '',
-                'no_hp'=> '',
-                'alamat'=> '',
+                'nim' => 'required|max:255',
+                'nama' => '',
+                'prodi_id' => '',
+                'no_hp' => '',
+                'alamat' => '',
             ],
             [
-                'nim.required' => 'NIM harus diisi',
-                'nim.unique'=> 'NIM sudah ada',
-            'nim.max'=> 'NIM maksimal 255 karakter',
+                'nim.required' => 'Nim Harus diisi',
+                'nim.unique' => 'Nim sudah ada',
+                'nim.max' => 'Nim maksimal 255 karakter',
             ]
             );
-            $validateData['foto']= $validateData['nim'] . '.jpg';
-        $validateData['password']= Hash::make($validateData['nim']);
-        Mahasiswa::create($validateData);
-        return redirect('/mahasiswa');
-
+            $validateData['foto'] = $validateData['nim'] . '.jpg';
+            $validateData['password'] = Hash::make($validateData['nim']);
+            Mahasiswa::where('nim', $id)->update($validateData);
+            return redirect ('/mahasiswa');
     }
 
     /**
@@ -112,8 +107,8 @@ class MahasiswaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
-        Mahasiswa::destroy($id);
-        return redirect ('/mahasiswa');
+        // Use the correct primary key column name
+        Mahasiswa::where('nim', $id)->delete();
+        return redirect('/mahasiswa');
     }
 }

@@ -13,14 +13,14 @@ class ProdiController extends Controller
 {
     public function index()
     {
-        $data = ['nama' => "syfa", 'foto' => 'E020322090.jpeg'];
+        $data = ['nama' => '', 'foto' =>'opp.jpeg'];
         $prodi = Prodi::all();
         return view('prodi.index', compact ('data', 'prodi')); 
     }
 
     public function create()
     {
-        $data = ['nama' => "syfa", 'foto' => 'E020322090.jpeg'];
+        $data = ['nama' => '', 'foto' =>'opp.jpeg'];
         return view('prodi.create', compact(['data']));
     }
 
@@ -31,8 +31,8 @@ class ProdiController extends Controller
                 'nama_prodi' => 'required|unique:prodi|max:255'
             ],
             [
-                'nama_prodi.requeired' => 'Nama Prodi harus diisi' ,
-                'nama_prodi.unique' => 'Nama Prodi sudah ada' ,
+                'nama_prodi.required' => 'Nama Prodi harus diisi',
+                'nama_prodi.unique' => 'Nama Prodi sudah ada',
                 'nama_prodi.max' => 'Nama Prodi maksimal 255 karakter'
             ]
         );
@@ -40,32 +40,35 @@ class ProdiController extends Controller
             return redirect ('/prodi');
     }
 
-    public function edit(string $id)
+    public function edit (string $id)
     {
-        $data = ['nama' => "syfa", 'foto' => 'E020322090.jpeg'];
-        $prodi = Prodi::find($id);
-        return view ('prodi.edit', compact(['data', 'prodi']));
+        $data = ['nama' => '', 'foto' =>'opp.jpeg'];
+        $prodi = prodi::find($id);
+        return view('prodi.edit', compact(['data' ,'prodi']));
     }
-    public function update(Request $request, string $id)
+
+    public function update (Request $request, string $id)
     {
         $validateData = $request->validate(
             [
                 'nama_prodi' => 'required|unique:prodi|max:255'
             ],
             [
-                'nama_prodi.requeired' => 'Nama Prodi harus diisi' ,
-                'nama_prodi.unique' => 'Nama Prodi sudah ada' ,
+                'nama_prodi.required' => 'Nama Prodi harus diisi',
+                'nama_prodi.unique' => 'Nama Prodi sudah ada',
                 'nama_prodi.max' => 'Nama Prodi maksimal 255 karakter'
             ]
-            );
-            Prodi::where('id',$id)-> update($validateData);
-            return redirect('/prodi');
-    }
-    public function destroy(string $id)
-    {
-        Prodi::destroy($id);
+        );
+        prodi::where('id', $id)->update($validateData);
         return redirect('/prodi');
     }
+
+    public function destroy(string $id)
+
+    {
+    prodi::destroy($id);
+    return redirect('/prodi');
+    }
+    
+    
 }
-
-
